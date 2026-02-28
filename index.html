@@ -1,17 +1,325 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Welcome to Suzzy</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopUpGaming - Utama</title>
     <style>
-        body { font-family: sans-serif; text-align: center; margin-top: 50px; background-color: #f0f2f5; }
-        .card { background: white; padding: 20px; display: inline-block; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h1 { color: #ff69b4; }
+        /* --- CSS DASAR --- */
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #dfe6e9;
+            --white: #ffffff;
+            --accent: #00b894;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: var(--dark);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .logo span { color: var(--white); }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover { color: var(--primary); }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar / Form Section */
+        .sidebar {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-search {
+            width: 100%;
+            background-color: var(--dark);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Product Grid */
+        .content h2 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .game-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .card-img {
+            height: 120px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #aaa;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .item-price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .btn-buy {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .btn-buy:hover {
+            background-color: #00a884;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+            nav ul { display: none; } /* Simplified for mobile */
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Welcome to Suzzy! ♥</h1>
-        <p>Website ini sedang dalam perbaikan.</p>
+
+    <!-- Navbar -->
+    <header>
+        <div class="logo">TopUp<span>Game</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Beranda</a></li>
+                <li><a href="#">Status Pesanan</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Sidebar Form -->
+        <aside class="sidebar">
+            <h3>Cari Game</h3>
+            <br>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label>Pilih Game</label>
+                    <select id="gameSelect">
+                        <option value="ml">Mobile Legends</option>
+                        <option value="ff">Free Fire</option>
+                        <option value="genshin">Genshin Impact</option>
+                        <option value="pubg">PUBG Mobile</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>User ID</label>
+                    <input type="text" id="userId" placeholder="Masukkan User ID" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nickname (Opsional)</label>
+                    <input type="text" placeholder="Nickname karakter">
+                </div>
+
+                <button type="button" class="btn-search" onclick="filterProducts()">Cari & Tampilkan</button>
+            </form>
+        </aside>
+
+        <!-- Products Area -->
+        <section class="content">
+            <h2 id="selectedGameTitle">Paket Diamond (Mobile Legends)</h2>
+            <div class="game-list" id="productGrid">
+                <!-- Produk akan di-generate lewat JS -->
+            </div>
+        </section>
     </div>
+
+    <script>
+        // --- DATA PRODUK (BIASA DISIMPAN DI DATABASE) ---
+        const products = {
+            ml: [
+                { name: "Diamond 86", price: "Rp 20.000" },
+                { name: "Diamond 172", price: "Rp 40.000" },
+                { name: "Diamond 500", price: "Rp 110.000" },
+                { name: "Diamond 1000", price: "Rp 210.000" }
+            ],
+            ff: [
+                { name: "Diamond 70", price: "Rp 10.000" },
+                { name: "Diamond 355", price: "Rp 50.000" },
+                { name: "Diamond 1000", price: "Rp 135.000" },
+                { name: "Diamond 5000", price: "Rp 650.000" }
+            ],
+            genshin: [
+                { name: "Genesis Crystal 60", price: "Rp 15.000" },
+                { name: "Genesis Crystal 300+30", price: "Rp 65.000" }
+            ],
+            pubg: [
+                { name: "UC 60", price: "Rp 12.000" },
+                { name: "UC 325", price: "Rp 55.000" }
+            ]
+        };
+
+        // --- FUNGSI MENAMPILKAN PRODUK ---
+        function renderProducts(gameKey) {
+            const grid = document.getElementById('productGrid');
+            const title = document.getElementById('selectedGameTitle');
+            const gameName = document.getElementById('gameSelect').options[document.getElementById('gameSelect').selectedIndex].text;
+            
+            grid.innerHTML = ''; // Clear previous
+            title.innerText = `Paket ${gameName}`;
+
+            const items = products[gameKey];
+
+            if (items) {
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="card-img">🎮</div>
+                        <div class="card-body">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">${item.price}</div>
+                            <button class="btn-buy" onclick="buyItem('${item.name}', '${item.price}')">Beli Sekarang</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        // --- FUNGSI TOMBOL BELI ---
+        function buyItem(itemName, price) {
+            const userId = document.getElementById('userId').value;
+            if(userId === "") {
+                alert("Mohon masukkan User ID terlebih dahulu!");
+                return;
+            }
+            // Di sini biasanya lanjut ke halaman pembayaran
+            alert(`Item: ${itemName}\nHarga: ${price}\nUser ID: ${userId}\n\n(Maka lanjut ke pembayaran via Midtrans/Manual)`);
+        }
+
+        // --- INISIALISASI AWAL ---
+        function filterProducts() {
+            const gameKey = document.getElementById('gameSelect').value;
+            renderProducts(gameKey);
+        }
+
+        // Load produk pertama kali saat halaman dibuka
+        renderProducts('ml');
+
+    </script>
 </body>
-</html>
+    </html>
